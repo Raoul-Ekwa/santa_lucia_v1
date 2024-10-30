@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
   return (
@@ -13,31 +11,24 @@ function HomeScreen() {
   );
 }
 
-function ProfilScreen() {
+function LogoTitle() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
+    <>
+    <View style={styles.headerLogo}>
+      <Text style={{color:'white', fontSize:20}}>Santa Lucia</Text>
+      <Image
+      style={{ width: 100, height: 55 }}
+      source={require('../../assets/images/logo_santaLucia.png')}
+    />
     </View>
+
+    </>
+    
   );
 }
 
-function StackScreen() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: 'My home' }}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={({ route }) => ({ title: route.params.name })}
-      />
-    </Stack.Navigator>
-  );
+const Stack = createNativeStackNavigator();
 
-}
 function App() {
   return (
     <NavigationContainer independent={true}>
@@ -45,19 +36,29 @@ function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Santa Lucia' }}
+          options={{ 
+            headerTitle: (props) => <LogoTitle {...props} />,
+            headerStyle: {
+              backgroundColor: '#DE3163',
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
-export default App;
-
 const styles = StyleSheet.create({
-  Container: {
-    flex:1,
+  headerLogo: {
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 100
   }
-});
+})
+
+
+
+export default App;
